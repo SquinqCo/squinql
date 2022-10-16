@@ -65,4 +65,9 @@ export default class SocketHandler {
         this.socket.emit("startGame")
     }
 
+    static sendSquanq(character: string) {
+        this.socket.emit("sendSquanql", character)
+    }
+
+
 }
