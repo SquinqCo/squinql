@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import router from '@/router';
+import SocketHandler from '@/sockets';
 import { ref, onMounted } from 'vue';
-import SquanqEntry from "../components/SquanqEntry.vue"
 
 
 let size = 0
@@ -23,17 +24,13 @@ onMounted(() => {
 </script>
 
 <template>
-    <aside>
-  
-    </aside>
-    <main class="flex flex-col h-screen">
-      <div class="bg-pastel-magenta h-full">
-        <h1>Welcome to Squinql</h1>
-        <SquanqEntry class="w-full"></SquanqEntry>
-        <!-- <SquanqCanvas></SquanqCanvas> -->
-        <!-- <div class="p-24 bg-pastel-dark-turquoise flex flex-column"></div> -->
+    <main class="flex flex-col h-screen bg-pastel-magenta">
+      <div class="h-full text-center">
+        <h1 class="text-6xl font-bold mt-24">Welcome to Squinql</h1>
+        <div class="flex flex-col mt-16">
+          <button class="bg-pastel-purple py-3 w-2/3 text-3xl mx-auto rounded-xl" @click="router.push('/host')">Create a Lobby</button>
+          <button class="bg-pastel-purple mt-16 py-3 w-2/3 text-3xl mx-auto rounded-xl" @click="router.push('/join')">Join a Lobby</button>
+        </div>
       </div>
-      <!-- <div class="p-4 bg-pastel-dark-turquoise flex flex-row"> -->
-      <!-- </div> -->
     </main>
   </template>

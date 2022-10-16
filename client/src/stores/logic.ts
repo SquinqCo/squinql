@@ -3,6 +3,15 @@ import { defineStore } from 'pinia'
 
 export const useLogicStore = defineStore('logic', {
     state: () => ({
-        squanql: ""
-    })
+        squanql: "",
+        gameKey: ""
+    }),
+    actions: {
+        setGameKey(key: string) {
+            this.gameKey = key
+        },
+        clearGameKey() {
+            this.gameKey = ""
+        }
+    }
 })
