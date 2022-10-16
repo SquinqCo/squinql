@@ -79,7 +79,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('sendCharacter', (character: string) => {
-    socket.emit('sendCharacer', generateSquinq(character, 0))
+    socket.emit('sendCharacter', generateSquinq(character, 0))
   })
 
   socket.on('sendSquanql', (text:string, svg:string) => {
