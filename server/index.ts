@@ -91,26 +91,32 @@ io.on('connection', (socket) => {
 
       if (squanqlBox.length == io.sockets.adapter.rooms.get(socket.data.gameId)?.size) {
         const clients = io.sockets.adapter.rooms.get(socket.data.gameId);
-
-        for (const clientId of clients ?? []) {
-          let num = Math.floor(Math.random() * squanqlBox.length); 
-          let entry = squanqlBox[num]
-          if (entry[0] == clientId) {
-            if (num != 0) {
-              num = num - 1
-              entry = squanqlBox[num-1]
+        if (clients?.size == 1) {
+          let entry = squanqlBox[0]
+          socket.data.assignedSquanql = entry
+          socket.emit("sendSquanql", entry[2])
+        }
+        else {
+          for (const clientId of clients ?? []) {
+            let num = Math.floor(Math.random() * squanqlBox.length); 
+            let entry = squanqlBox[num]
+            if (entry[0] == clientId) {
+              if (num != 0) {
+                num = num - 1
+                entry = squanqlBox[num-1]
+              }
+              else{
+                num = num + 1
+                entry = squanqlBox[num+1]
+              }
             }
-            else{
-              num = num + 1
-              entry = squanqlBox[num+1]
+            squanqlBox.splice(num, 1)
+            const clientSocket = io.sockets.sockets.get(clientId);
+  
+            if (clientSocket) {
+              clientSocket.data.assignedSquanql = entry
+              clientSocket.emit("sendSquanql", entry[2])
             }
-          }
-          squanqlBox.splice(num, 1)
-          const clientSocket = io.sockets.sockets.get(clientId);
-
-          if (clientSocket) {
-            clientSocket.data.assignedSquanql = entry
-            clientSocket.emit("sendSquanql", entry[2])
           }
         }
         io.to(socket.data.gameId).emit('startPhase2', 30)
