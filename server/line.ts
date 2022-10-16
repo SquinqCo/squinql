@@ -9,21 +9,27 @@ let attributeValues: Record<string, AttributeValues> = {'a': {spikey: 1, isSmoot
 // Generate a squing using (the letters)
 export function generateSquinq(sequence: string, startingDirection: number) {
     // Start with straight vector
-    let vector: Array<Array<number>> = [[0, 50], [1, 50], [2, 50], [3, 50], [4, 50]]
+    let vector: Array<Array<number>> = [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]]
 
     // now factor in sharpness depending on the point score of the values
-    vector[1][1] = vector[1][1] + ((Math.floor(Math.random()*3) - 2)) * (attributeValues[sequence.charAt(0)].spikey * 5)/3
-    vector[2][1] = vector[2][1] + ((Math.floor(Math.random()*3) - 2)) * (attributeValues[sequence.charAt(0)].spikey * 5)
-    vector[3][1] = vector[3][1] + ((Math.floor(Math.random()*3) - 2)) * (attributeValues[sequence.charAt(0)].spikey * 5)/3
-    // vector[3][1] = vector[3][1] + ((Math.floor(Math.random()*3) - 2)) * (attributeValues[sequence.charAt(1)].spikey * 50)
+    let vector1 = ((1 - 2 * Math.round(Math.random())) * (attributeValues[sequence.charAt(0)].spikey + Math.random()*8-4))*5
+    let vector2 = ((1 - 2 * Math.round(Math.random())) * (attributeValues[sequence.charAt(0)].spikey + Math.random()*8-4))*10
+    let vector3 = ((1 - 2 * Math.round(Math.random())) * (attributeValues[sequence.charAt(0)].spikey + Math.random()*8-4))*5
+
+    console.log(vector1, vector2, vector3)
+
+    vector[1][1] = vector1
+    vector[2][1] = vector2
+    vector[3][1] = vector3
 
     // Now take those values, generate line and smooth out depending on the smooth values
     // jk
+    let isSmooth = attributeValues[sequence.charAt(0)].isSmooth
 
     // Now we draw our shape
 
-    var svgLine = `<svg height="500" width="500">
-    <path d="M${vector[0][0]*50} ${vector[0][1]} L${vector[1][0]*50} ${vector[1][1]} L${vector[2][0]*50} ${vector[2][1]} L${vector[3][0]*50} ${vector[3][1]} L${vector[4][0]*50} ${vector[4][1]}" stroke="red" fill="none"/>
+    var svgLine = `<svg>
+    <path d="M${vector[0][0]*50} ${vector[0][1]+100} ${isSmooth ? "T" : "L"}${vector[1][0]*50} ${vector[1][1]+100} ${isSmooth ? "T" : "L"}${vector[2][0]*50} ${vector[2][1]+100} ${isSmooth ? "T" : "L"}${vector[3][0]*50} ${vector[3][1]+100} ${isSmooth ? "T" : "L"}${vector[4][0]*50} ${vector[4][1]+100}" stroke-width="3" stroke="red" fill="none"/>
     </svg>
     `
 

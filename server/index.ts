@@ -27,14 +27,15 @@ app.get('/', (req, res) => {
     <!DOCTYPE html>
     <html>
       <head>
-          <title>Hello squrkle!</title>
+          <title>Squinql!</title>
       </head>
       <script src="/socket.io/socket.io.js"></script>
       <script>
         var socket = io();
       </script>
-      ${generateSquinq("xx", 0).toString()}
-      <body>SQUINK!!! SQUNIQL!!</body>
+      <div style="margin:500;padding:200">
+        ${generateSquinq("xx", 0).toString()}
+      </div>
     </html>
   `);
 });
