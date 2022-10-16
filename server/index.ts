@@ -133,8 +133,14 @@ io.on('connection', (socket) => {
     let game = GameManager.getPendingGame(code);
 
     if (game) {
+      io.to(game).emit('playerJoin', socket.data.name)
       socket.join(game)
-      socket.emit("joinGame", 200)
+      const clients = io.sockets.adapter.rooms.get(game);
+      let playerNames = []
+      for (const client in clients) {
+        playerNames.push(io.sockets.sockets.get(client)?.data.name)
+      }
+      socket.emit("joinGame", playerNames)
       socket.data.gameId = game
     }
     else {
@@ -145,6 +151,7 @@ io.on('connection', (socket) => {
   socket.on('leaveGame', () => {
     if (socket.data.gameId) {
       socket.leave(socket.data.gameId)
+      io.to(socket.data.gameId).emit('playerLeave', socket.data.name)
       delete socket.data.gameId
     }
   })
@@ -159,8 +166,8 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     if (socket.data.gameId && !io.sockets.adapter.rooms.get(socket.data.gameId)) {
+      io.to(socket.data.gameId).emit('playerLeave', socket.data.name)
       socket.leave(socket.data.gameId)
-
     }
   })
 });
