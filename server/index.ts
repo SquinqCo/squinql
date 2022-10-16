@@ -73,7 +73,7 @@ io.on('connection', (socket) => {
       io.to(socket.data.gameId).emit("startGame", 30)
       GameManager.storeValue(socket.data.gameId, "squanqlBox", [])
       setTimeout(() => {
-        socket.emit("stopPhase1")
+        io.to(socket.data.gameId as string).emit("stopPhase1")
       }, 30000);
     }
   })
