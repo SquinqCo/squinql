@@ -34,7 +34,7 @@ function textUpdated(char: string) {
     console.log("CHar", char)
 
     // Here we send the information to the backend
-    SocketHandler.sendSquaggle(char)
+    SocketHandler.sendSquanq(char)
 
   } else {
     console.log("HAR", char)
