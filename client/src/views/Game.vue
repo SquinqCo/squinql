@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import SquanqEntry from "../components/SquanqEntry.vue"
+import Pallette from "../components/Pallette.vue"
 import SquaglViewer from "../components/SquaglViewer.vue"
-import SquanqCanvas from "../components/SquanqCanvas.vue"
+import SquinqCanvas from "../components/SquinqCanvas.vue"
 
 let size = 0
 
@@ -29,10 +29,10 @@ onMounted(() => {
   </aside>
   <main class="flex flex-col h-screen">
     <div class="bg-pastel-magenta h-full">
-      <SquanqCanvas></SquanqCanvas>
+      <SquinqCanvas></SquinqCanvas>
     </div>
     <div class="p-4 bg-pastel-dark-turquoise flex flex-row">
-      <SquinqEntry class="w-full"></SquinqEntry>
+      <Pallette class="w-full"></Pallette>
     </div>
   </main>
 </template>

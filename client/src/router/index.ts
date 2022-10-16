@@ -1,3 +1,4 @@
+import GameVue from '@/views/Game.vue'
 import PregameVue from '@/views/Pregame.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -7,7 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: PregameVue
+      component: GameVue
     },
   ]
 })
