@@ -79,6 +79,8 @@ io.on('connection', (socket) => {
   })
 
   socket.on('sendCharacter', (character: string, startingPoint: number) => {
+    let line = generateSquinq(character, 0, startingPoint)
+    console.log("GENERATING: " ,startingPoint, line.toString)
     socket.emit('sendCharacter', generateSquinq(character, 0, startingPoint))
   })
 
