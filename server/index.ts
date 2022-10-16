@@ -32,7 +32,11 @@ import { generateSquinq } from "./line"
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server, { /* options */ });
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+  }
+});
 
 
 app.get('/', (req, res) => {
