@@ -100,7 +100,7 @@ io.on('connection', (socket) => {
           for (const clientId of clients ?? []) {
             let num = Math.floor(Math.random() * squanqlBox.length); 
             let entry = squanqlBox[num]
-            if (entry[0] == clientId) {
+            if (entry[num] == clientId) {
               if (num != 0) {
                 num = num - 1
                 entry = squanqlBox[num-1]
