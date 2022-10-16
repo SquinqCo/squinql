@@ -112,6 +112,9 @@ io.on('connection', (socket) => {
             }
             squanqlBox.splice(num, 1)
             const clientSocket = io.sockets.sockets.get(clientId);
+            console.log("SOCKET: ", clientSocket)
+
+            console.log("ENTRY: ", entry)
   
             if (clientSocket) {
               clientSocket.data.assignedSquanql = entry
