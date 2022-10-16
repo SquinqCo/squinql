@@ -10,7 +10,7 @@ interface SocketData {
   gameKey: string;
   gameId: string;
   is_host: boolean;
-  assignedSquanql: Array<string>
+  assignedSquanql: Array<string | Array<string>>
   // TODO: Other data associated with user
 }
 
@@ -84,10 +84,10 @@ io.on('connection', (socket) => {
     socket.emit('sendCharacter', generateSquinq(character, 0, startingPoint))
   })
 
-  socket.on('sendSquanql', (text:string, svg:string) => {
+  socket.on('sendSquanql', (text:string, paths:Array<string>) => {
     if (socket.data.gameId) {
-      let squanqlBox = GameManager.getValue(socket.data.gameId, "squanqlBox") as Array<Array<string>>;
-      squanqlBox.push([socket.id, text, svg])
+      let squanqlBox = GameManager.getValue(socket.data.gameId, "squanqlBox") as Array<Array<string | Array<string>>>;
+      squanqlBox.push([socket.id, text, paths])
 
       if (squanqlBox.length == io.sockets.adapter.rooms.get(socket.data.gameId)?.size) {
         const clients = io.sockets.adapter.rooms.get(socket.data.gameId);
@@ -126,9 +126,9 @@ io.on('connection', (socket) => {
     if (socket.data.assignedSquanql && socket.data.gameId && socket.data.name) {
       let squinqlBox = GameManager.getValue(socket.data.gameId, "sqinqlBox") as Array<Record<string, string>>
       let squanql = socket.data.assignedSquanql
-      const authorSocket = io.sockets.sockets.get(squanql[0]);
+      const authorSocket = io.sockets.sockets.get(squanql[0] as string);
       if (authorSocket?.data.name) {
-        let sqinql = {squanqlAuthor: authorSocket.data.name, squinqlAuthor: socket.data.name, word: squanql[1], jpg: jpg}
+        let sqinql = {squanqlAuthor: authorSocket.data.name, squinqlAuthor: socket.data.name, word: squanql[1] as string, jpg: jpg}
         squinqlBox.push(sqinql)
 
         if (squinqlBox.length == io.sockets.adapter.rooms.get(socket.data.gameId)?.size) {
