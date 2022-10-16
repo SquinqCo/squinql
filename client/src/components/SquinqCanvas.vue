@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useDrawStore } from '@/stores/draw';
+import { useLogicStore } from '@/stores/logic'
 import SquanqEntry from "../components/SquanqEntry.vue"
 import SquaglViewer from "../components/SquaglViewer.vue"
 
 let size = ref(0)
 let ctx: CanvasRenderingContext2D;
 
-let drawState = useDrawStore()
+let drawState = useDrawStore();
+let logicState = useLogicStore();
 
 // Drawing LMFAO
-
-window.addEventListener('load', ()=>{
-        
+onMounted(() => {
   document.addEventListener('mousedown', startPainting);
   document.addEventListener('mouseup', stopPainting);
   document.addEventListener('mousemove', sketch);
@@ -23,7 +23,7 @@ let paint = false
 let coord = {x:0 , y:0}; 
 
 function getPosition(event: MouseEvent){
-  let canvas = document.getElementById('squanq-drawer') as HTMLCanvasElement
+  let canvas = document.getElementById('squinq-drawer') as HTMLCanvasElement
 
   coord.x = event.clientX - canvas.offsetLeft;
   coord.y = event.clientY - canvas.offsetTop;
@@ -32,15 +32,18 @@ function getPosition(event: MouseEvent){
 // The following functions toggle the flag to start
 // and stop drawing
 function startPainting(event: MouseEvent){
+  console.log("paint go brr")
   paint = true;
   getPosition(event);
 }
 
 function stopPainting(){
+  console.log("no paint")
   paint = false;
 }
 
 function sketch(event: MouseEvent){
+  console.log("sketch")
   if (!paint) return;
   ctx.beginPath();
     
@@ -90,12 +93,19 @@ let calcWidthHeight = () => {
 
 let bindCtx = (context: CanvasRenderingContext2D) => {
   ctx = context
+
+  for (let i = 0; i < logicState.squanq.length; i++) {
+    console.log(logicState.squanq[i])
+    let path = new Path2D(logicState.squanq[i])
+    ctx.moveTo(0,0)
+    ctx.stroke(path)
+  }
 }
 
 calcWidthHeight()
 
 onMounted(() => {
-  let canvas = document.getElementById('squanq-drawer') as HTMLCanvasElement
+  let canvas = document.getElementById('squinq-drawer') as HTMLCanvasElement
   let context = canvas.getContext("2d")
 
   if (context) {
@@ -119,6 +129,6 @@ onUnmounted(() => {
 
 <template>
   <div class="bg">
-    <canvas id="squanq-drawer" class="mx-auto my-[10px] border-black border-8 rounded-xl" :width="size" :height="size"></canvas>
+    <canvas id="squinq-drawer" class="mx-auto my-[10px] border-black border-8 rounded-xl" :width="size" :height="size"></canvas>
   </div>
 </template>

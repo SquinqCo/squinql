@@ -7,7 +7,10 @@ export const useLogicStore = defineStore('logic', {
         gameKey: "",
         phase: 0,
         timeLeft: 0,
-        players: [] as Array<string>
+        players: [] as Array<string>,
+        paths: [] as Array<string>,
+        squanq_template: "",
+        squanq: [] as Array<string>
     }),
     actions: {
         setGameKey(key: string) {
@@ -38,14 +41,33 @@ export const useLogicStore = defineStore('logic', {
         },
         setTimer(time: number) {
             this.timeLeft = time
+        },
+        startTimer() {
             const timedown = setInterval(() => {
                 if (this.timeLeft > 0) {
                     this.timeLeft -=1
                 }
                 else {
-                    clearTimeout(timedown)
+                    clearInterval(timedown)
                 }
             }, 1000)
+        },
+        addPath(path: string) {
+            this.paths.push(path)
+            console.log(this.paths)
+        },
+        popPath() {
+            this.paths.pop()
+        },
+        getPaths() {
+            return this.paths
+        },
+
+        setSquanq(squanq: Array<string>) {
+            this.squanq = squanq
+        },
+        getSquanq() {
+            return this.squanq
         }
     }
 })

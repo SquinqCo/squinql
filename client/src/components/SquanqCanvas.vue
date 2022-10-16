@@ -1,10 +1,23 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, type Ref, watch } from 'vue';
 import SquanqEntry from "../components/SquanqEntry.vue"
 import SquaglViewer from "../components/SquaglViewer.vue"
+import { useLogicStore } from '@/stores/logic';
+import { storeToRefs } from 'pinia';
 
 let size = ref(0)
 let ctx: CanvasRenderingContext2D;
+
+let logicState = useLogicStore();
+
+logicState.$subscribe((mut, state) => {
+  for (let i = 0; i < logicState.paths.length; i++) {
+    console.log(logicState.paths[i])
+    let path = new Path2D(logicState.paths[i])
+    ctx.moveTo(0,0)
+    ctx.stroke(path)
+  }
+})
 
 let calcWidthHeight = () => {
   if (window.innerWidth < window.innerHeight) {
@@ -33,7 +46,6 @@ onMounted(() => {
 
   ctx.fillStyle = "#ffffff"
   ctx.fillRect(0, 0, canvas.width, canvas.height)
-
 })
 
 onUnmounted(() => {

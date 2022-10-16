@@ -20,10 +20,15 @@ export default class SocketHandler {
             logicState.incrPhase();
             router.push('/game')
             logicState.setTimer(time)
+            logicState.startTimer()
         })
 
         this.socket.on('stopPhase1', () => {
-            // Send SVG, idk how that's gonna work
+            this.sendSquanql(logicState.squanq_template, logicState.paths)
+        })
+
+        this.socket.on('sendSquanql', (squanq: Array<string>) => {
+            logicState.setSquanq(squanq);
         })
 
         this.socket.on('startPhase2', (time: number) => {
@@ -47,6 +52,11 @@ export default class SocketHandler {
             logicState.removePlayer(r)
         })
 
+        this.socket.on('sendCharacter', (r) => {
+            console.log(r)
+            logicState.addPath(r)
+        })
+
     }
 
     static registerUser(name: string) {
@@ -65,9 +75,12 @@ export default class SocketHandler {
         this.socket.emit("startGame")
     }
 
-    static sendSquanq(character: string) {
-        this.socket.emit("sendSquanql", character)
+    static sendCharacter(character: string, offset=0): void {
+        this.socket.emit("sendCharacter", character, offset)
     }
 
+    static sendSquanql(word: string, paths: Array<string>) {
+        this.socket.emit("sendSquanql", word, paths)
+    }
 
 }

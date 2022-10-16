@@ -35,9 +35,12 @@ function textUpdated(char: string) {
     console.log("CHar", char)
 
     // Here we send the information to the backend
-    SocketHandler.sendSquanq(char)
+    SocketHandler.sendCharacter(char, 200*logicState.paths.length)
 
   } else {
+    if (char == 'backspace') {
+      logicState.popPath()
+    }
     console.log("HAR", char)
 
     // this is not a normal char or a space
@@ -55,7 +58,7 @@ function textUpdated(char: string) {
       <SquinqCanvas v-else-if="logicState.phase == 2"></SquinqCanvas>
     </div>
     <div class="p-4 bg-pastel-dark-turquoise flex flex-row">
-      <SquanqEntry @textUpdated="textUpdated" v-if="logicState.phase == 0"></SquanqEntry>
+      <SquanqEntry @textUpdated="textUpdated" v-if="logicState.phase == 1"></SquanqEntry>
       <Pallette v-else-if="logicState.phase == 2" class="w-full"></Pallette>
     </div>
   </main>
