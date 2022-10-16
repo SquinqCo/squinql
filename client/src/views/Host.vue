@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SocketHandler from '@/sockets';
 import { useLogicStore } from '@/stores/logic';
+import PlayerList from '../components/PlayerList.vue';
 
 const logicState = useLogicStore()
 SocketHandler.createGame();
@@ -20,6 +21,8 @@ SocketHandler.createGame();
         <button class="bg-pastel-turquoise px-4 my-16 w-96 ml-4 mr-auto rounded-xl text-6xl font-bold"
           @click="SocketHandler.startGame()">Start!</button>
       </div>
+      <h2 class="text-4xl font-bold mt-24">Players</h2>
+      <PlayerList class="text-3xl"></PlayerList>
     </div>
   </main>
 </template>

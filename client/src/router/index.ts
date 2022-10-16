@@ -2,6 +2,8 @@ import GameVue from '@/views/Game.vue'
 import HostVue from '@/views/Host.vue'
 import JoinVue from '@/views/Join.vue'
 import LobbyVue from '@/views/Lobby.vue'
+import NameVue from '@/views/Name.vue'
+import PostgameVue from '@/views/Postgame.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -9,7 +11,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'name',
+      component: NameVue
+    },
+    {
+      path: '/game',
+      name: 'game',
       component: GameVue
     },
     {
@@ -26,6 +33,11 @@ const router = createRouter({
       path: '/join',
       name: 'join',
       component: JoinVue
+    },
+    {
+      path: '/summary',
+      name: 'summary',
+      component: PostgameVue
     }
   ]
 })

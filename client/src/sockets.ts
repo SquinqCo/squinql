@@ -2,6 +2,7 @@ import { io } from "socket.io-client";
 import type { Socket } from "socket.io-client"
 import { useLogicStore } from "./stores/logic";
 import { pinia } from "./main";
+import router from "./router";
 
 export default class SocketHandler {
     private static socket: Socket;
@@ -16,13 +17,40 @@ export default class SocketHandler {
         })
 
         this.socket.on('startGame', (time: number) => {
-            
+            logicState.incrPhase();
+            router.push('/game')
+            logicState.setTimer(time)
+        })
+
+        this.socket.on('stopPhase1', () => {
+            // Send SVG, idk how that's gonna work
+        })
+
+        this.socket.on('startPhase2', (time: number) => {
+            logicState.incrPhase();
+            logicState.setTimer(time)
+        })
+
+        this.socket.on('stopPhase2', () => {
+            router.push('/summary')
         })
 
         this.socket.on('joinGame', (r) => {
-            console.log(r)
+            logicState.setPlayers(r)
         })
 
+        this.socket.on('playerJoin', (r) =>{
+            logicState.addPlayer(r)
+        })
+
+        this.socket.on('playerLeave', (r) => {
+            logicState.removePlayer(r)
+        })
+
+    }
+
+    static registerUser(name: string) {
+        this.socket.emit("registerUser", name)
     }
 
     static createGame() {
