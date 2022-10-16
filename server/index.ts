@@ -107,7 +107,7 @@ io.on('connection', (socket) => {
               }
               else{
                 num = num + 1
-                entry = squanqlBox[num+1]
+                entry = squanqlBox[num]
               }
             }
             squanqlBox.splice(num, 1)
