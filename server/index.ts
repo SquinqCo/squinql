@@ -1,43 +1,38 @@
-// import express from "express";
-// import { createServer } from "http";
-// import { Server } from "socket.io";
-
-// const app = express();
-// const httpServer = createServer(app);
-// const io = new Server(httpServer, { /* options */ });
-// const port = process.env.PORT || 8080
-
-// app.get('/', function(req, res) {
-//   console.log(process.dir)
-//   res.sendFile('/client/index.html')
-// })
-
-// io.on('connection', (socket) => {
-//   console.log("user connect")
-
-//   socket.on('disconnect', function () {
-//     console.log(`user disconnect`)
-//   })
-// })
-
-// httpServer.listen(port, function() {
-//   console.log(`Listening on port ${port}`)
-// })
-
-
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { generateSquinq } from "./line"
 
+interface ServerToClientEvents {
+  noArg: () => void;
+  basicEmit: (a: number, b: string, c: Buffer) => void;
+  withAck: (d: string, callback: (e: number) => void) => void;
+}
+
+interface ClientToServerEvents {
+  hello: () => void;
+}
+
+interface InterServerEvents {
+  ping: () => void;
+}
+
+interface SocketData {
+  name: string;
+  // TODO: Other data associated with user
+}
+
 const app = express();
 const server = createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: '*',
-  }
+const io = new Server<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData> (server, {
+    cors: {
+      origin: '*',
+    }
 });
-
 
 app.get('/', (req, res) => {
   res.send(`
@@ -50,7 +45,7 @@ app.get('/', (req, res) => {
       <script>
         var socket = io();
       </script>
-      ${generateSquinq("ae", 0).toString()}
+      ${generateSquinq("xx", 0).toString()}
       <body>SQUINK!!! SQUNIQL!!</body>
     </html>
   `);
@@ -64,6 +59,14 @@ io.on('connection', (socket) => {
   socket.on('disconnect', function () {
     console.log('user disconnected');
   });
+
+  // socket.on('registerUser', (userName) => {
+  //   socket.data.name = userName
+  // })
+
+  // socket.on("getSquanql", (letter) => {
+  //   socket.emit("", generateSquinq(letter, 0))
+  // });
 });
 
 server.listen(3000, () => {

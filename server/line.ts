@@ -12,19 +12,22 @@ export function generateSquinq(sequence: string, startingDirection: number) {
     let vector: Array<Array<number>> = [[0, 50], [1, 50], [2, 50], [3, 50], [4, 50]]
 
     // now factor in sharpness depending on the point score of the values
-    vector[1][1] = vector[1][1] + (Math.floor(Math.random()*2) - 1) * attributeValues[sequence.charAt(0)].spikey
-    vector[3][1] = vector[3][1] + (Math.floor(Math.random()*2) - 1) * attributeValues[sequence.charAt(1)].spikey
+    vector[1][1] = vector[1][1] + ((Math.floor(Math.random()*3) - 2)) * (attributeValues[sequence.charAt(0)].spikey * 5)/3
+    vector[2][1] = vector[2][1] + ((Math.floor(Math.random()*3) - 2)) * (attributeValues[sequence.charAt(0)].spikey * 5)
+    vector[3][1] = vector[3][1] + ((Math.floor(Math.random()*3) - 2)) * (attributeValues[sequence.charAt(0)].spikey * 5)/3
+    // vector[3][1] = vector[3][1] + ((Math.floor(Math.random()*3) - 2)) * (attributeValues[sequence.charAt(1)].spikey * 50)
 
     // Now take those values, generate line and smooth out depending on the smooth values
     // jk
 
     // Now we draw our shape
 
-    // var svgLine = `<svg height="210" width="500">
-    // <path d="M${vector[0][0]} ${vector[0][1]} L${vector[1][0]} ${vector[1][1]} L${vector[2][0]} ${vector[2][1]} L${vector[3][0]} ${vector[3][1]} L${vector[4][0]} ${vector[4][1]} Z" stroke="red" stroke-width="3" fill="none"/>
-    // </svg> 
+    var svgLine = `<svg height="500" width="500">
+    <path d="M${vector[0][0]*50} ${vector[0][1]} L${vector[1][0]*50} ${vector[1][1]} L${vector[2][0]*50} ${vector[2][1]} L${vector[3][0]*50} ${vector[3][1]} L${vector[4][0]*50} ${vector[4][1]}" stroke="red" fill="none"/>
+    </svg>
+    `
 
-    var svgLine = '<svg><path d="M0 0 l100 0 l150 100" fill-opacity="0" stroke="red"/></svg>'
+    // var svgLine = '<svg><path d="M0 0 l100 0 l150 100" fill-opacity="0" stroke="red"/></svg>'
     
 
      // <line x1="-2" y1="0" x2="-1" y2="${vector[1][1]}" x3="0" y3="0" x4="1" y4="${vector[3][1]}" x5="1" y5="200" style="stroke:rgb(255,0,0);stroke-width:2" />
