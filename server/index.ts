@@ -34,7 +34,9 @@ app.get('/', (req, res) => {
         var socket = io();
       </script>
       <div style="margin:500;padding:200">
-        ${generateSquinq("xx", 0).toString()}
+      <svg>
+        <path d="${generateSquinq("x", 0).toString()}"/>
+      </svg>
       </div>
     </html>
   `);
@@ -74,6 +76,10 @@ io.on('connection', (socket) => {
         socket.emit("stopPhase1")
       }, 30000);
     }
+  })
+
+  socket.on('sendCharacter', (character: string) => {
+    socket.emit('sendCharacer', generateSquinq(character, 0))
   })
 
   socket.on('sendSquanql', (text:string, svg:string) => {
