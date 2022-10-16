@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import SquanqEntry from "../components/SquanqEntry.vue"
 import SquaglViewer from "../components/SquaglViewer.vue"
-import BaseCanvas from "../components/BaseCanvas.vue"
+import SquanqCanvas from "../components/SquanqCanvas.vue"
 
 let size = 0
 
@@ -29,7 +29,7 @@ onMounted(() => {
   </aside>
   <main class="flex flex-col h-screen">
     <div class="bg-pastel-magenta h-full">
-      <BaseCanvas></BaseCanvas>
+      <SquanqCanvas></SquanqCanvas>
     </div>
     <div class="p-4 bg-pastel-dark-turquoise flex flex-row">
       <SquanqEntry class="w-full"></SquanqEntry>

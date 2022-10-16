@@ -5,6 +5,9 @@ import App from './App.vue'
 import router from './router'
 
 import './assets/main.css'
+import SocketHandler from './sockets'
+
+SocketHandler.connect(window.location.protocol + "//137.184.235.2/")
 
 const app = createApp(App)
 
