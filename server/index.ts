@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
       </script>
       <div style="margin:500;padding:200">
       <svg>
-        <path d="${generateSquinq("x", 0).toString()}"/>
+        <path d="${generateSquinq("x", 0, 0).toString()}"/>
       </svg>
       </div>
     </html>
@@ -78,8 +78,8 @@ io.on('connection', (socket) => {
     }
   })
 
-  socket.on('sendCharacter', (character: string) => {
-    socket.emit('sendCharacter', generateSquinq(character, 0))
+  socket.on('sendCharacter', (character: string, startingPoint: number) => {
+    socket.emit('sendCharacter', generateSquinq(character, 0, startingPoint))
   })
 
   socket.on('sendSquanql', (text:string, svg:string) => {
@@ -167,9 +167,9 @@ io.on('connection', (socket) => {
     socket.data.name = userName
   })
 
-  socket.on("getSquanqlet", (letter) => {
-    socket.emit("getSquanqlet", generateSquinq(letter, 0))
-  });
+  // socket.on("getSquanqlet", (letter) => {
+  //   socket.emit("getSquanqlet", generateSquinq(letter, 0))
+  // });
 
   socket.on('disconnect', () => {
     if (socket.data.gameId && !io.sockets.adapter.rooms.get(socket.data.gameId)) {
