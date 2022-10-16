@@ -1,9 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+const emit = defineEmits(['textUpdated'])
 
 const squanq_template = ref('')
+
+const handleChange = (event: KeyboardEvent) => {
+    emit('textUpdated', event.key)
+    // emit('textUpdated', event.target.value.toLowerCase())
+}
+
+// function handleChange(event: KeyboardEvent) {
+//     console.log("")
+// }
+
 </script>
 
 <template>
-    <input type="text" class="text-4xl p-2 rounded-lg bg-pastel-orange placeholder:text-neutral-600" placeholder="Create a Squanq!" v-model="squanq_template">
+    <input type="text" @keyup="handleChange" class="text-4xl p-2 rounded-lg bg-pastel-orange placeholder:text-neutral-600" placeholder="Create a Squanq!" v-model="squanq_template">
 </template>

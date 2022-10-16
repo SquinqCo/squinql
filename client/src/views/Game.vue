@@ -6,6 +6,7 @@ import SquinqCanvas from "../components/SquinqCanvas.vue"
 import SquanqCanvas from "../components/SquanqCanvas.vue"
 import SquanqEntry from "../components/SquanqEntry.vue"
 import { useLogicStore } from "../stores/logic";
+import SocketHandler from '@/sockets';
 
 let size = 0
 
@@ -26,16 +27,33 @@ onMounted(() => {
   window.addEventListener('resize', calcWidthHeight)
 })
 
+const regex =  new RegExp('[a-z]+')
+function textUpdated(char: string) {
+  if (char.length == 1 && char.toLowerCase().match(regex)) {
+    // is a character
+    console.log("CHar", char)
+
+    // Here we send the information to the backend
+    SocketHandler.sendSquaggle(char)
+
+  } else {
+    console.log("HAR", char)
+
+    // this is not a normal char or a space
+
+  }
+}
+
 </script>
 
 <template>
   <main class="flex flex-col h-screen">
     <div class="bg-pastel-magenta h-full">
-      <SquanqCanvas v-if="logicState.phase == 1"></SquanqCanvas>
+      <SquanqCanvas v-if="logicState.phase == 0"></SquanqCanvas>
       <SquinqCanvas v-else-if="logicState.phase == 2"></SquinqCanvas>
     </div>
     <div class="p-4 bg-pastel-dark-turquoise flex flex-row">
-      <SquanqEntry v-if="logicState.phase == 1"></SquanqEntry>
+      <SquanqEntry @textUpdated="textUpdated" v-if="logicState.phase == 0"></SquanqEntry>
       <Pallette v-else-if="logicState.phase == 2" class="w-full"></Pallette>
     </div>
   </main>
