@@ -3,8 +3,13 @@ import { ref, onMounted } from 'vue';
 import Pallette from "../components/Pallette.vue"
 import SquaglViewer from "../components/SquaglViewer.vue"
 import SquinqCanvas from "../components/SquinqCanvas.vue"
+import SquanqCanvas from "../components/SquanqCanvas.vue"
+import SquanqEntry from "../components/SquanqEntry.vue"
+import { useLogicStore } from "../stores/logic";
 
 let size = 0
+
+const logicState = useLogicStore()
 
 let calcWidthHeight = () => {
   if (window.innerWidth < window.innerHeight) {
@@ -24,15 +29,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <aside>
-
-  </aside>
   <main class="flex flex-col h-screen">
     <div class="bg-pastel-magenta h-full">
-      <SquinqCanvas></SquinqCanvas>
+      <SquanqCanvas v-if="logicState.phase == 1"></SquanqCanvas>
+      <SquinqCanvas v-else-if="logicState.phase == 2"></SquinqCanvas>
     </div>
     <div class="p-4 bg-pastel-dark-turquoise flex flex-row">
-      <Pallette class="w-full"></Pallette>
+      <SquanqEntry v-if="logicState.phase == 1"></SquanqEntry>
+      <Pallette v-else-if="logicState.phase == 2" class="w-full"></Pallette>
     </div>
   </main>
 </template>

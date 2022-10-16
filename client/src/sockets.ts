@@ -2,8 +2,6 @@ import { io } from "socket.io-client";
 import type { Socket } from "socket.io-client"
 import { useLogicStore } from "./stores/logic";
 import { pinia } from "./main";
-import AppVue from "./App.vue";
-
 
 export default class SocketHandler {
     private static socket: Socket;
