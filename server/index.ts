@@ -28,6 +28,7 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import { generateSquinq } from "./line"
 
 const app = express();
 const server = createServer(app);
@@ -45,6 +46,7 @@ app.get('/', (req, res) => {
       <script>
         var socket = io();
       </script>
+      ${generateSquinq("ae", 0).toString()}
       <body>SQUINK!!! SQUNIQL!!</body>
     </html>
   `);
@@ -52,6 +54,8 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log(`a user connected ${socket.id}`);
+
+  // console.log(generateSquinq("ae", 0).toString())
 
   socket.on('disconnect', function () {
     console.log('user disconnected');
